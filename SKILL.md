@@ -7,6 +7,17 @@ description: 搜尋 SkillsMP 技能市場的 AI 技能庫
 
 此 Skill 提供 SkillsMP 技能市場的搜尋功能，支援關鍵字搜尋和 AI 語意搜尋。
 
+## 安裝依賴
+
+首次使用此 Skill 時，需要先安裝 Node.js 依賴套件：
+
+```pwsh
+npm install
+```
+
+> [!NOTE]
+> 此步驟只需執行一次，AI 代理應先檢查 `node_modules` 目錄是否存在。
+
 ## 功能
 
 ### 1. 關鍵字搜尋
