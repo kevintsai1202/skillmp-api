@@ -131,26 +131,32 @@ skillmp-api/
 > ⚠️ **Note**  
 > SkillsMP skill IDs cannot be used directly with `npx add-skill`. Follow these steps:
 
+
 1. **Search for skills**
+   Use the helper script to find the repository and skill name:
    ```bash
    python scripts/install_helper.py "spring boot"
    ```
 
-2. **Find the repository** - Use the GitHub search link from the output
-
-3. **List available skills**
+2. **Verify repository content**
+   
+   List all skills available in the repository:
    ```bash
    npx add-skill <owner>/<repo> --list
    ```
 
-4. **Install the skill**
+3. **Install the skill**
+
+   Install specific skill to global scope (User-level):
    ```bash
-   # Global installation
-   npx add-skill <owner>/<repo> --skill "<skill-name>" -g -y
-   
-   # Project-local installation
-   npx add-skill <owner>/<repo> --skill "<skill-name>" -y
+   npx add-skill <owner>/<repo> --skill "<skill-name>" -g -a antigravity -y
    ```
+
+   **Other Installation Options:**
+   
+   - Install ALL skills: `npx add-skill <owner>/<repo> -g -a antigravity -y`
+   - Install to Local Project: `npx add-skill <owner>/<repo> --skill "<skill-name>" -a antigravity -y`
+
 
 ## 📦 API Response Format
 

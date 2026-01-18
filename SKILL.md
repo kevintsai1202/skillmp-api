@@ -139,32 +139,72 @@ python scripts/install_helper.py "react" 10
 
 ---
 
-## Skill Installation Workflow
 
-> [!IMPORTANT]
-> SkillsMP skill IDs cannot be used directly with `npx add-skill`.
-> Follow these steps to install a skill:
+---
+
+## Skill Installation
+
+This skill integrates with `add-skill` CLI to install skills directly from Git repositories.
+
+### Supported Agents
+
+| Agent | Identifier | Global Skills Directory |
+|-------|------------|-------------------------|
+| **Antigravity** | `antigravity` | `~/.gemini/antigravity/skills/` |
+| **Claude Code** | `claude-code` | `~/.claude/skills/` |
+| **Cursor** | `cursor` | `.cursor/skills/` |
+| **Codex** | `codex` | `.codex/skills/` |
+| **OpenCode** | `opencode` | `.opencode/skills/` |
+| **GitHub Copilot** | `github-copilot` | `.github/copilot/skills/` |
+| **Roo Code** | `roo` | `.roo/skills/` |
+
+### Install Command References
+
+The `add-skill` tool installs skills from any Git repository.
+
+**Install specific skill to global scope (User-level):**
+```bash
+npx add-skill <owner>/<repo> --skill "<skill-name>" -g -a antigravity -y
+```
+
+**Install ALL skills from a repo:**
+```bash
+npx add-skill <owner>/<repo> -g -a antigravity -y
+```
+
+**Install to project scope (Local):**
+```bash
+npx add-skill <owner>/<repo> --skill "<skill-name>" -a antigravity -y
+```
+
+**List available skills in a repo:**
+```bash
+npx add-skill <owner>/<repo> --list
+```
+
+### Complete Installation Workflow
 
 1. **Search for skills**
+   Use the helper script to find the repository and skill name:
    ```bash
    python scripts/install_helper.py "spring boot"
    ```
 
-2. **Find the repository** - Use the GitHub search link from the output
-
-3. **List available skills**
+2. **Verify repository content**
+   List all skills available in the repository:
    ```bash
    npx add-skill <owner>/<repo> --list
    ```
 
-4. **Install the skill**
+3. **Install the skill**
+   Choose one of the installation commands above. For most cases, use the **Global Install**:
    ```bash
-   # For global installation
-   npx add-skill <owner>/<repo> --skill "<skill-name>" -g -y
-   
-   # For project-local installation
-   npx add-skill <owner>/<repo> --skill "<skill-name>" -y
+   npx add-skill <owner>/<repo> --skill "<skill-name>" -g -a antigravity -y
    ```
+
+4. **Verify Installation**
+   Check if the skill files are created in the agent's skill directory.
+
 
 ---
 
