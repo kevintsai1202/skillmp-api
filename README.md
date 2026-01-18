@@ -3,6 +3,8 @@
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 
+[English](README.md) | [繁體中文](README_zh-TW.md)
+
 A universal skill for searching and discovering AI skills from the [SkillsMP](https://skillsmp.com) marketplace. Compatible with all AI agents that support the SKILL format (Claude, Cursor, Windsurf, Antigravity, etc.).
 
 ## ✨ Features
