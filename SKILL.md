@@ -67,6 +67,58 @@ node scripts/ai-search.js "How to create a web scraper"
 
 ---
 
+### 3. 安裝輔助工具
+搜尋技能並提供安裝指令建議。
+
+**執行方式：**
+```pwsh
+node scripts/install-helper.js "<搜尋關鍵字>" [顯示筆數]
+```
+
+**參數：**
+| 參數 | 必填 | 說明 |
+|------|------|------|
+| 搜尋關鍵字 | ✓ | 要搜尋的技能關鍵字 |
+| 顯示筆數 | | 顯示前 N 筆，預設 5 |
+
+**範例：**
+```pwsh
+node scripts/install-helper.js "spring boot"
+node scripts/install-helper.js "react" 10
+```
+
+**輸出包含：**
+- 技能名稱、作者、Stars、說明
+- GitHub 搜尋連結（用於找到正確儲存庫）
+- 完整的安裝指令說明
+
+---
+
+### 技能安裝流程
+
+> [!IMPORTANT]
+> SkillsMP 的技能 ID 無法直接用於 `npx add-skill` 安裝。
+> 請按照以下步驟操作：
+
+1. **搜尋技能**
+   ```pwsh
+   node scripts/install-helper.js "spring boot"
+   ```
+
+2. **找到儲存庫** - 使用輸出的 GitHub 搜尋連結找到正確的儲存庫
+
+3. **列出可用技能**
+   ```pwsh
+   npx add-skill <owner>/<repo> --list
+   ```
+
+4. **安裝技能**
+   ```pwsh
+   npx add-skill <owner>/<repo> --skill "<skill-name>" -g -a antigravity -y
+   ```
+
+---
+
 ## 回應格式
 
 成功回應：
