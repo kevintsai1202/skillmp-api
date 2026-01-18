@@ -1,127 +1,176 @@
 ---
 name: SkillsMP API
-description: 搜尋 SkillsMP 技能市場的 AI 技能庫
+description: Search and discover AI skills from the SkillsMP marketplace
 ---
 
 # SkillsMP API Skill
 
-此 Skill 提供 SkillsMP 技能市場的搜尋功能，支援關鍵字搜尋和 AI 語意搜尋。
+This skill provides search functionality for the SkillsMP skill marketplace, supporting both keyword search and AI semantic search.
 
-## 安裝依賴
+## Prerequisites
 
-首次使用此 Skill 時，需要先安裝 Node.js 依賴套件：
+- **Node.js** 18 or higher
+- **SkillsMP API Key** from [skillsmp.com/settings/api](https://skillsmp.com/settings/api)
 
-```pwsh
+## Installation
+
+First-time setup requires installing Node.js dependencies:
+
+```bash
+cd <skill-directory>
 npm install
 ```
 
 > [!NOTE]
-> 此步驟只需執行一次，AI 代理應先檢查 `node_modules` 目錄是否存在。
+> This step only needs to be run once. Check if `node_modules` directory exists before running.
 
-## 功能
+## API Key Configuration
 
-### 1. 關鍵字搜尋
-使用關鍵字搜尋技能庫。
+### Check if API Key is configured
 
-**執行方式：**
-```pwsh
-node scripts/search.js "<搜尋關鍵字>" [頁碼] [每頁筆數] [排序方式]
+Before running any search script, check if `.env` file exists:
+
+```bash
+# Check if .env exists
+test -f .env && echo "Configured" || echo "Not configured"
 ```
 
-**參數：**
-| 參數 | 必填 | 說明 |
-|------|------|------|
-| 搜尋關鍵字 | ✓ | 要搜尋的關鍵字 |
-| 頁碼 | | 頁碼，預設 1 |
-| 每頁筆數 | | 每頁筆數，預設 20，最大 100 |
-| 排序方式 | | `stars` 或 `recent` |
+### Setup API Key
 
-**範例：**
-```pwsh
-# 基本搜尋
+**Option 1: Using setup script (Recommended)**
+
+```bash
+node scripts/setup.js <API_KEY>
+```
+
+**Option 2: Create .env file directly**
+
+Create a `.env` file with the following content:
+
+```env
+SKILLSMP_API_KEY=sk_live_skillsmp_xxxxxxxxxx
+```
+
+> [!TIP]
+> Get your API Key from [SkillsMP API Settings](https://skillsmp.com/settings/api)
+
+---
+
+## Features
+
+### 1. Keyword Search
+
+Search the skill library using keywords.
+
+**Usage:**
+```bash
+node scripts/search.js "<keyword>" [page] [per_page] [sort]
+```
+
+**Parameters:**
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| keyword | ✓ | Search keyword |
+| page | | Page number, default: 1 |
+| per_page | | Items per page, default: 20, max: 100 |
+| sort | | `stars` or `recent` |
+
+**Examples:**
+```bash
+# Basic search
 node scripts/search.js "SEO"
 
-# 指定分頁與排序
+# With pagination and sorting
 node scripts/search.js "web scraper" 1 10 stars
 ```
 
 ---
 
-### 2. AI 語意搜尋
-使用 AI 進行語意搜尋（Cloudflare AI 驅動）。
+### 2. AI Semantic Search
 
-**執行方式：**
-```pwsh
-node scripts/ai-search.js "<搜尋查詢>"
+Use AI-powered semantic search (Cloudflare AI).
+
+**Usage:**
+```bash
+node scripts/ai-search.js "<query>"
 ```
 
-**參數：**
-| 參數 | 必填 | 說明 |
-|------|------|------|
-| 搜尋查詢 | ✓ | 自然語言查詢 |
+**Parameters:**
 
-**範例：**
-```pwsh
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| query | ✓ | Natural language query |
+
+**Examples:**
+```bash
 node scripts/ai-search.js "How to create a web scraper"
+node scripts/ai-search.js "skills for building REST APIs"
 ```
 
 ---
 
-### 3. 安裝輔助工具
-搜尋技能並提供安裝指令建議。
+### 3. Install Helper
 
-**執行方式：**
-```pwsh
-node scripts/install-helper.js "<搜尋關鍵字>" [顯示筆數]
+Search skills and get installation command suggestions.
+
+**Usage:**
+```bash
+node scripts/install-helper.js "<keyword>" [limit]
 ```
 
-**參數：**
-| 參數 | 必填 | 說明 |
-|------|------|------|
-| 搜尋關鍵字 | ✓ | 要搜尋的技能關鍵字 |
-| 顯示筆數 | | 顯示前 N 筆，預設 5 |
+**Parameters:**
 
-**範例：**
-```pwsh
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| keyword | ✓ | Skill keyword to search |
+| limit | | Number of results to show, default: 5 |
+
+**Examples:**
+```bash
 node scripts/install-helper.js "spring boot"
 node scripts/install-helper.js "react" 10
 ```
 
-**輸出包含：**
-- 技能名稱、作者、Stars、說明
-- GitHub 搜尋連結（用於找到正確儲存庫）
-- 完整的安裝指令說明
+**Output includes:**
+- Skill name, author, stars, description
+- GitHub search link to find the repository
+- Installation command instructions
 
 ---
 
-### 技能安裝流程
+## Skill Installation Workflow
 
 > [!IMPORTANT]
-> SkillsMP 的技能 ID 無法直接用於 `npx add-skill` 安裝。
-> 請按照以下步驟操作：
+> SkillsMP skill IDs cannot be used directly with `npx add-skill`.
+> Follow these steps to install a skill:
 
-1. **搜尋技能**
-   ```pwsh
+1. **Search for skills**
+   ```bash
    node scripts/install-helper.js "spring boot"
    ```
 
-2. **找到儲存庫** - 使用輸出的 GitHub 搜尋連結找到正確的儲存庫
+2. **Find the repository** - Use the GitHub search link from the output
 
-3. **列出可用技能**
-   ```pwsh
+3. **List available skills**
+   ```bash
    npx add-skill <owner>/<repo> --list
    ```
 
-4. **安裝技能**
-   ```pwsh
-   npx add-skill <owner>/<repo> --skill "<skill-name>" -g -a antigravity -y
+4. **Install the skill**
+   ```bash
+   # For global installation
+   npx add-skill <owner>/<repo> --skill "<skill-name>" -g -y
+   
+   # For project-local installation
+   npx add-skill <owner>/<repo> --skill "<skill-name>" -y
    ```
 
 ---
 
-## 回應格式
+## Response Format
 
-成功回應：
+**Success Response:**
 ```json
 {
   "success": true,
@@ -131,85 +180,35 @@ node scripts/install-helper.js "react" 10
 }
 ```
 
-錯誤回應：
+**Error Response:**
 ```json
 {
   "success": false,
   "error": {
     "code": "ERROR_CODE",
-    "message": "錯誤訊息"
+    "message": "Error message"
   }
 }
 ```
 
-## API Key 設定
-
-使用此 Skill 前，需要先設定您的 SkillsMP API Key。
-
-### 首次使用檢查
-
-執行任何搜尋腳本前，AI 代理應先檢查 `.env` 檔案是否存在：
-
-```pwsh
-Test-Path .env
-```
-
-如果回傳 `False`，代表尚未設定 API Key，請依照下方步驟引導使用者。
-
 ---
 
-### 取得 API Key
+## Agent Workflow
 
-1. 前往 [SkillsMP 官網](https://skillsmp.com) 並登入/註冊帳號
-2. 進入 [API 設定頁面](https://skillsmp.com/settings/api) 取得您的 API Key
-3. API Key 格式為 `sk_live_skillsmp_...`
+When a user requests SkillsMP search functionality:
 
----
+1. **Check if `.env` exists**
+   - If exists → Run search script directly
+   - If not → Guide user through setup
 
-### 設定方式
+2. **Guide user to get API Key**
+   - Direct user to https://skillsmp.com/settings/api
+   - Ask user to provide the API Key
 
-#### 方式一：使用設定腳本（推薦）
+3. **Configure API Key**
+   - Use `setup.js` script or create `.env` file
+   - Verify setup before running search
 
-請使用者提供 API Key 後，執行：
-
-```pwsh
-node scripts/setup.js <使用者的API_KEY>
-```
-
-範例：
-```pwsh
-node scripts/setup.js sk_live_skillsmp_7WDzBELUzXWmts0pt6666YbJBJWFbDLFFVR3wtXYRys
-```
-
-#### 方式二：AI 代理直接建立 .env
-
-如果使用者提供了 API Key，AI 代理可直接建立 `.env` 檔案：
-
-```pwsh
-@"
-# SkillsMP API 設定
-SKILLSMP_API_KEY=<使用者的API_KEY>
-"@ | Out-File -FilePath .env -Encoding utf8
-```
-
----
-
-### AI 代理操作流程
-
-當使用者要求使用 SkillsMP 搜尋功能時，AI 代理應：
-
-1. **檢查 .env 是否存在**
-   - 若存在 → 直接執行搜尋腳本
-   - 若不存在 → 進入設定流程
-
-2. **引導使用者取得 API Key**
-   - 告知使用者前往 https://skillsmp.com/settings/api
-   - 請使用者複製 API Key 並貼上
-
-3. **設定 API Key**
-   - 使用 `setup.js` 腳本或直接建立 `.env` 檔案
-   - 確認設定成功後再執行搜尋
-
-> [!IMPORTANT]
-> `.env` 檔案包含敏感資訊，已被加入 `.gitignore`，不會上傳到 GitHub。
-> 請妥善保管您的 API Key，切勿公開分享。
+> [!CAUTION]
+> The `.env` file contains sensitive information and is excluded from Git.
+> Never share or expose your API Key publicly.
