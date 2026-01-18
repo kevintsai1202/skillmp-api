@@ -1,3 +1,7 @@
+// 載入環境變數
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
+
 /**
  * SkillsMP AI 語意搜尋腳本
  * 使用 AI 語意搜尋 SkillsMP 技能市場 (Cloudflare AI 驅動)
@@ -10,7 +14,15 @@
 
 // API 設定
 const API_BASE_URL = 'https://skillsmp.com';
-const API_KEY = 'sk_live_skillsmp_7WDzBELUzXWmts0pt6666YbJBJWFbDLFFVR3wtXYRys';
+// 從環境變數讀取 API key
+const API_KEY = process.env.SKILLSMP_API_KEY;
+
+// 檢查 API key 是否已設定
+if (!API_KEY) {
+    console.error('錯誤: 請設定環境變數 SKILLSMP_API_KEY');
+    console.error('提示: 複製 .env.example 為 .env 並填入您的 API key');
+    process.exit(1);
+}
 
 /**
  * 執行 AI 語意搜尋

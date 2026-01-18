@@ -79,6 +79,30 @@ node scripts/ai-search.js "How to create a web scraper"
 }
 ```
 
-## API Key
+## API Key 設定
 
-腳本已內建 API Key，可直接執行。
+使用此 Skill 前，需要先設定您的 SkillsMP API Key。
+
+### 取得 API Key
+
+1. 前往 [SkillsMP 官網](https://skillsmp.com) 並登入/註冊帳號
+2. 進入 [API 設定頁面](https://skillsmp.com/settings/api) 取得您的 API Key
+3. API Key 格式為 `sk_live_skillsmp_...`
+
+### 設定方式
+
+1. 在 `skillmp-api` 目錄下，複製 `.env.example` 為 `.env`：
+   ```pwsh
+   cp .env.example .env
+   ```
+
+2. 編輯 `.env` 檔案，填入您的 API Key：
+   ```
+   SKILLSMP_API_KEY=sk_live_skillsmp_您的API金鑰
+   ```
+
+3. 完成後即可執行腳本
+
+> [!IMPORTANT]
+> `.env` 檔案包含敏感資訊，已被加入 `.gitignore`，不會上傳到 GitHub。
+> 請妥善保管您的 API Key，切勿公開分享。
