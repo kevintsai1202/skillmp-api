@@ -149,6 +149,77 @@ def search_skills(query, limit=5):
         }
 
 
+def select_agent():
+    """
+    讓使用者選擇目標 Agent
+    
+    Returns:
+        str: 選擇的 Agent 識別符
+    """
+    agents = {
+        "1": ("antigravity", "Antigravity (Google DeepMind)"),
+        "2": ("claude-code", "Claude Code (Anthropic)"),
+        "3": ("cursor", "Cursor"),
+        "4": ("roo", "Roo Code"),
+        "5": ("github-copilot", "GitHub Copilot"),
+        "a": ("all", "列出所有 Agent 指令")
+    }
+    
+    print("請問要安裝到哪個 Agent 環境？")
+    for key, (agent_id, name) in agents.items():
+        print(f"  [{key}] {name}")
+    print("  [q] 離開")
+    
+    while True:
+        choice = input("\n請選擇 (預設 1): ").strip().lower()
+        
+        if not choice:
+            return "antigravity"
+        
+        if choice == 'q':
+            sys.exit(0)
+            
+        if choice in agents:
+            return agents[choice][0]
+            
+        print("❌ 無效的選擇，請重試")
+
+
+def generate_install_command(repo_path, skill_name=None, agent_id="antigravity"):
+    """
+    生成安裝指令
+    
+    Args:
+        repo_path: 儲存庫路徑 (owner/repo)
+        skill_name: 技能名稱 (可選)
+        agent_id: Agent ID
+    
+    Returns:
+        list: 指令列表
+    """
+    commands = []
+    
+    # 定義 Agent ID 列表
+    target_agents = [agent_id]
+    if agent_id == "all":
+        target_agents = ["antigravity", "claude-code", "cursor"]
+    
+    for agent in target_agents:
+        agent_flag = f"-a {agent}"
+        agent_name = agent.capitalize()
+        
+        if skill_name:
+            cmd = f'npx add-skill {repo_path} --skill "{skill_name}" -g {agent_flag} -y'
+            desc = f"# 安裝到 {agent_name} (全域)"
+        else:
+            cmd = f'npx add-skill {repo_path} -g {agent_flag} -y'
+            desc = f"# 安裝所有技能到 {agent_name} (全域)"
+            
+        commands.append((desc, cmd))
+        
+    return commands
+
+
 def format_output(skills):
     """
     格式化輸出技能資訊
@@ -179,7 +250,6 @@ def format_output(skills):
         
         if parsed:
             print(f"    GitHub: {skill.get('githubUrl')}")
-            print(f"    安裝: npx add-skill {parsed['fullPath']} --list")
             
             # 記錄儲存庫
             full_path = parsed["fullPath"]
@@ -195,22 +265,27 @@ def format_output(skills):
     
     # 輸出快速安裝指令
     if repos:
-        print("=== 快速安裝指令 ===\n")
+        # 詢問目標 Agent
+        selected_agent = select_agent()
+        
+        print("\n=== 快速安裝指令 ===\n")
         
         for repo_path, skill_names in repos.items():
-            print(f"# 儲存庫: {repo_path}")
-            print("# 列出所有技能:")
-            print(f"npx add-skill {repo_path} --list")
-            print()
-            print("# 安裝全部技能:")
-            print(f"npx add-skill {repo_path} -g -y")
+            print(f"📦 儲存庫: {repo_path}")
+            print(f"📋 列出可用技能: npx add-skill {repo_path} --list\n")
+            
+            # 安裝所有技能指令
+            print(f"⬇️  安裝該儲存庫所有技能:")
+            for desc, cmd in generate_install_command(repo_path, agent_id=selected_agent):
+                print(f"  {cmd}")
             print()
             
             if skill_names:
-                print("# 安裝特定技能:")
+                print(f"⬇️  安裝特定技能:")
                 for name in skill_names:
-                    print(f'npx add-skill {repo_path} --skill "{name}" -g -y')
-            print()
+                    for desc, cmd in generate_install_command(repo_path, name, selected_agent):
+                        print(f"  {cmd}")
+            print("-" * 40 + "\n")
 
 
 def main():
