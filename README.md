@@ -1,7 +1,7 @@
 # SkillsMP API Skill
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 
 A universal skill for searching and discovering AI skills from the [SkillsMP](https://skillsmp.com) marketplace. Compatible with all AI agents that support the SKILL format (Claude, Cursor, Windsurf, Antigravity, etc.).
 
@@ -13,7 +13,7 @@ A universal skill for searching and discovering AI skills from the [SkillsMP](ht
 
 ## 📋 Prerequisites
 
-- [Node.js](https://nodejs.org/) 18 or higher
+- [Python](https://www.python.org/) 3.8 or higher
 - [SkillsMP](https://skillsmp.com) account and API Key
 
 ## 🚀 Quick Start
@@ -21,15 +21,17 @@ A universal skill for searching and discovering AI skills from the [SkillsMP](ht
 ### 1. Install Dependencies
 
 ```bash
-npm install
+pip install requests
 ```
+
+> **Note**: `requests` is the only external dependency required.
 
 ### 2. Configure API Key
 
 #### Option 1: Using Setup Script (Recommended)
 
 ```bash
-node scripts/setup.js <YOUR_API_KEY>
+python scripts/setup.py <YOUR_API_KEY>
 ```
 
 #### Option 2: Create .env File Manually
@@ -54,7 +56,7 @@ SKILLSMP_API_KEY=sk_live_skillsmp_xxxxxxxxxx
 ### Keyword Search
 
 ```bash
-node scripts/search.js "<keyword>" [page] [per_page] [sort]
+python scripts/search.py "<keyword>" [page] [per_page] [sort]
 ```
 
 **Parameters:**
@@ -70,10 +72,10 @@ node scripts/search.js "<keyword>" [page] [per_page] [sort]
 
 ```bash
 # Basic search
-node scripts/search.js "SEO"
+python scripts/search.py "SEO"
 
 # With pagination and sorting
-node scripts/search.js "web scraper" 1 10 stars
+python scripts/search.py "web scraper" 1 10 stars
 ```
 
 ### AI Semantic Search
@@ -81,14 +83,14 @@ node scripts/search.js "web scraper" 1 10 stars
 Use natural language for intelligent searching:
 
 ```bash
-node scripts/ai-search.js "<query>"
+python scripts/ai_search.py "<query>"
 ```
 
 **Examples:**
 
 ```bash
-node scripts/ai-search.js "How to create a web scraper"
-node scripts/ai-search.js "skills for building REST APIs"
+python scripts/ai_search.py "How to create a web scraper"
+python scripts/ai_search.py "skills for building REST APIs"
 ```
 
 ### Install Helper
@@ -96,17 +98,17 @@ node scripts/ai-search.js "skills for building REST APIs"
 Search for skills and get installation command suggestions:
 
 ```bash
-node scripts/install-helper.js "<keyword>" [limit]
+python scripts/install_helper.py "<keyword>" [limit]
 ```
 
 **Examples:**
 
 ```bash
 # Search for Spring Boot related skills
-node scripts/install-helper.js "spring boot"
+python scripts/install_helper.py "spring boot"
 
 # Show top 10 results
-node scripts/install-helper.js "react" 10
+python scripts/install_helper.py "react" 10
 ```
 
 ## 📂 Project Structure
@@ -114,13 +116,12 @@ node scripts/install-helper.js "react" 10
 ```
 skillmp-api/
 ├── scripts/
-│   ├── search.js         # Keyword search script
-│   ├── ai-search.js      # AI semantic search script
-│   ├── install-helper.js # Installation helper tool
-│   └── setup.js          # API Key setup script
+│   ├── search.py         # Keyword search script
+│   ├── ai_search.py      # AI semantic search script
+│   ├── install_helper.py # Installation helper tool
+│   └── setup.py          # API Key setup script
 ├── .env.example          # Environment variables example
 ├── .gitignore            # Git ignore file
-├── package.json          # Project configuration
 ├── SKILL.md              # Skill documentation (for AI agents)
 └── README.md             # This file
 ```
@@ -132,7 +133,7 @@ skillmp-api/
 
 1. **Search for skills**
    ```bash
-   node scripts/install-helper.js "spring boot"
+   python scripts/install_helper.py "spring boot"
    ```
 
 2. **Find the repository** - Use the GitHub search link from the output

@@ -9,20 +9,20 @@ This skill provides search functionality for the SkillsMP skill marketplace, sup
 
 ## Prerequisites
 
-- **Node.js** 18 or higher
+- **Python** 3.8 or higher
+- **requests** library (`pip install requests`)
 - **SkillsMP API Key** from [skillsmp.com/settings/api](https://skillsmp.com/settings/api)
 
 ## Installation
 
-First-time setup requires installing Node.js dependencies:
+First-time setup requires installing the requests library:
 
 ```bash
-cd <skill-directory>
-npm install
+pip install requests
 ```
 
 > [!NOTE]
-> This step only needs to be run once. Check if `node_modules` directory exists before running.
+> This step only needs to be run once. Python's requests library is the only external dependency required.
 
 ## API Key Configuration
 
@@ -40,7 +40,7 @@ test -f .env && echo "Configured" || echo "Not configured"
 **Option 1: Using setup script (Recommended)**
 
 ```bash
-node scripts/setup.js <API_KEY>
+python scripts/setup.py <API_KEY>
 ```
 
 **Option 2: Create .env file directly**
@@ -64,7 +64,7 @@ Search the skill library using keywords.
 
 **Usage:**
 ```bash
-node scripts/search.js "<keyword>" [page] [per_page] [sort]
+python scripts/search.py "<keyword>" [page] [per_page] [sort]
 ```
 
 **Parameters:**
@@ -79,10 +79,10 @@ node scripts/search.js "<keyword>" [page] [per_page] [sort]
 **Examples:**
 ```bash
 # Basic search
-node scripts/search.js "SEO"
+python scripts/search.py "SEO"
 
 # With pagination and sorting
-node scripts/search.js "web scraper" 1 10 stars
+python scripts/search.py "web scraper" 1 10 stars
 ```
 
 ---
@@ -93,7 +93,7 @@ Use AI-powered semantic search (Cloudflare AI).
 
 **Usage:**
 ```bash
-node scripts/ai-search.js "<query>"
+python scripts/ai_search.py "<query>"
 ```
 
 **Parameters:**
@@ -104,8 +104,8 @@ node scripts/ai-search.js "<query>"
 
 **Examples:**
 ```bash
-node scripts/ai-search.js "How to create a web scraper"
-node scripts/ai-search.js "skills for building REST APIs"
+python scripts/ai_search.py "How to create a web scraper"
+python scripts/ai_search.py "skills for building REST APIs"
 ```
 
 ---
@@ -116,7 +116,7 @@ Search skills and get installation command suggestions.
 
 **Usage:**
 ```bash
-node scripts/install-helper.js "<keyword>" [limit]
+python scripts/install_helper.py "<keyword>" [limit]
 ```
 
 **Parameters:**
@@ -128,8 +128,8 @@ node scripts/install-helper.js "<keyword>" [limit]
 
 **Examples:**
 ```bash
-node scripts/install-helper.js "spring boot"
-node scripts/install-helper.js "react" 10
+python scripts/install_helper.py "spring boot"
+python scripts/install_helper.py "react" 10
 ```
 
 **Output includes:**
@@ -147,7 +147,7 @@ node scripts/install-helper.js "react" 10
 
 1. **Search for skills**
    ```bash
-   node scripts/install-helper.js "spring boot"
+   python scripts/install_helper.py "spring boot"
    ```
 
 2. **Find the repository** - Use the GitHub search link from the output
@@ -206,7 +206,7 @@ When a user requests SkillsMP search functionality:
    - Ask user to provide the API Key
 
 3. **Configure API Key**
-   - Use `setup.js` script or create `.env` file
+   - Use `setup.py` script or create `.env` file
    - Verify setup before running search
 
 > [!CAUTION]
