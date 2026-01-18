@@ -16,6 +16,7 @@ A universal skill for searching and discovering AI skills from the [SkillsMP](ht
 ## 📋 Prerequisites
 
 - [Python](https://www.python.org/) 3.8 or higher
+- [Node.js](https://nodejs.org/) (for `npx` command to install skills)
 - [SkillsMP](https://skillsmp.com) account and API Key
 
 ## 🚀 Quick Start

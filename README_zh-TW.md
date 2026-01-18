@@ -17,6 +17,7 @@
 ## 📋 前置需求
 
 - [Python](https://www.python.org/) 3.8 或更高版本
+- [Node.js](https://nodejs.org/) (用於執行 `npx` 指令安裝技能)
 - [SkillsMP](https://skillsmp.com) 帳號與 API Key
 
 ## 🚀 快速開始
